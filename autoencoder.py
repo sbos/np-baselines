@@ -7,7 +7,7 @@ from prepare_data import *
 input_img = T.matrix('X')
 D = 20 * 20
 
-code_length = 64
+code_length = 32
 
 
 class SaltAndPepperNoiseLayer(lasagne.layers.Layer):
@@ -37,8 +37,8 @@ code = lasagne.layers.DenseLayer(encoder, code_length, nonlinearity=leaky_rectif
 get_code = th.function([input_img], lasagne.layers.get_output(code, deterministic=True))
 
 decoder = lasagne.layers.DenseLayer(code, 200, nonlinearity=leaky_rectify)
-decoder = lasagne.layers.DenseLayer(code, 200, nonlinearity=leaky_rectify)
-decoder = lasagne.layers.DenseLayer(code, D, nonlinearity=sigmoid)
+decoder = lasagne.layers.DenseLayer(decoder, 200, nonlinearity=leaky_rectify)
+decoder = lasagne.layers.DenseLayer(decoder, D, nonlinearity=sigmoid)
 
 reconstruction = lasagne.layers.get_output(decoder)
 loss = lasagne.objectives.binary_crossentropy(reconstruction, input_img).mean()
