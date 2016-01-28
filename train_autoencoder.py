@@ -9,6 +9,10 @@ all_data = dict()
 parse_dataset('./all', all_data)
 
 train, test = split_dataset(all_data, 1200)
+
+for class_name, images in test.iteritems():
+    train[class_name] = images[:10]
+
 train = load_dataset(train)
 
 import time
